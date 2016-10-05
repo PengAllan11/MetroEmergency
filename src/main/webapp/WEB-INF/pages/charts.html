@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>charts</title>
+    <script src="//cdn.bootcss.com/echarts/3.2.3/echarts.min.js"></script>
+</head>
+<body>
+    <div id="mychart" style="width: 600px;height:400px;"></div>
+    <h3>各站疏散曲线</h3>
+    <div>
+        <div id="station1" style="width: 600px;height:400px;float:left;"></div>
+        <div id="station2" style="width: 600px;height:400px;float:right;"></div>
+    </div>
+    <div>
+        <div id="station3" style="width: 600px;height:400px;float:left;"></div>
+        <div id="station4" style="width: 600px;height:400px;float:right;"></div>
+    </div>
+    <div>
+        <div id="station5" style="width: 600px;height:400px;float:left;"></div>
+        <div id="station6" style="width: 600px;height:400px;float:right;"></div>
+    </div>
+
+</body>
+    <script type="text/javascript">
+        var myChart1=echarts.init(document.getElementById('station1'));
+        var option1 = {
+            title: {
+                text: '1号站'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                 data:['上游', '下游','下游总人数']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '10%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                name:'疏散时间（min）',
+                nameLocation:'middle',
+                nameGap:22
+            },
+            yAxis: {
+                type: 'value',
+                name:'疏散人数（人）'
+            },
+            series: [
+                {
+                    name:'下游',
+                    type:'line',
+                    step: 'true',
+                    data:[[33.4,90],[33.4,180],[35.4,270],[35.4,360],[39.4,450],[39.4,540],[39.4,630],[39.4,720],[112.6,810],[116.2,880]]
+                },
+                {
+                    name:'下游总人数',
+                    type:'line',
+                    step: 'true',
+                    lineStyle: {
+                         normal: {
+                            type: 'dashed'
+                        }
+                    },
+                    data:[[0,880],[116.2,880]]
+                }
+            ]
+        };
+        myChart1.setOption(option1);
+
+        //station2
+         var myChart2=echarts.init(document.getElementById('station2'));
+        var option2 = {
+            title: {
+                text: '2号站'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['上游', '下游','上游总人数','下游总人数']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '10%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                name:'疏散时间（min）',
+                nameLocation:'middle',
+                nameGap:22
+            },
+            yAxis: {
+                type: 'value',
+                name:'疏散人数（人）'
+            },
+            series: [
+                {
+                    name:'上游',
+                    type:'line',
+                    step: 'true',
+                    data:[[40.9,90],[42.9,180],[42.9,270],[52.9,360],[53.4,450],[54.9,540],[54.9,630],[65.4,720],[66.9,810],[66.9,840]]
+                },
+                 {
+                    name:'下游',
+                    type:'line',
+                    step: 'true',
+                    data:[[76.2,90],[100.6,180],[110.2,270],[117,312]]
+                },
+                {
+                    name:'上游总人数',
+                    type:'line',
+                    step: 'true',
+                    lineStyle: {
+                         normal: {
+                            type: 'dashed'
+                        }
+                    },
+                    data:[[0,840],[66.9,840]]
+                },
+                {
+                    name:'下游总人数',
+                    type:'line',
+                    step: 'true',
+                    lineStyle: {
+                         normal: {
+                            type: 'dashed'
+                        }
+                    },
+                    data:[[0,312],[117,312]]
+                }
+            ]
+        };
+        myChart2.setOption(option2);
+
+         //station3
+         var myChart3=echarts.init(document.getElementById('station3'));
+        var option3 = {
+            title: {
+                text: '3号站'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['上游', '下游','上游总人数','下游总人数']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '10%',
+                containLabel: true
+            },
+           xAxis: {
+                type: 'value',
+                name:'疏散时间（min）',
+                nameLocation:'middle',
+                nameGap:22
+            },
+            yAxis: {
+                type: 'value',
+                name:'疏散人数（人）'
+            },
+            series: [
+                {
+                    name:'上游',
+                    type:'line',
+                    step: 'true',
+                    data:[[50.7,90],[51.7,180],[73.5,270],[96.3,360],[119.1,402]]
+                },
+                 {
+                    name:'下游',
+                    type:'line',
+                    step: 'true',
+                    data:[[63.4,90],[69.4,180],[69.4,270],[99.4,356]]
+                },
+                {
+                    name:'上游总人数',
+                    type:'line',
+                    step: 'true',
+                    lineStyle: {
+                         normal: {
+                            type: 'dashed'
+                        }
+                    },
+                    data:[[0,402],[119.1,402]]
+                },
+                {
+                    name:'下游总人数',
+                    type:'line',
+                    step: 'true',
+                    lineStyle: {
+                         normal: {
+                            type: 'dashed'
+                        }
+                    },
+                    data:[[0,356],[99.4,356]]
+                }
+            ]
+        };
+        myChart3.setOption(option3);
+
+        //station4
+         var myChart4=echarts.init(document.getElementById('station4'));
+        var option4 = {
+            title: {
+                text: '4号站'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['上游', '下游','上游总人数','下游总人数']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '10%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                name:'疏散时间（min）',
+                nameLocation:'middle',
+                nameGap:22
+            },
+            yAxis: {
+                type: 'value',
+                name:'疏散人数（人）'
+            },
+            series: [
+                {
+                    name:'上游',
+                    type:'line',
+                    step: 'true',
+                    data:[[84.1,90],[85.3,180],[116.5,270],[117.7,355]]
+                },
+                 {
+                    name:'下游',
+                    type:'line',
+                    step: 'true',
+                    data:[[53.8,90],[59.8,180],[59.8,270],[74.2,360],[94.6,450],[115,474]]
+                },
+                {
+                    name:'上游总人数',
+                    type:'line',
+                    step: 'true',
+                    lineStyle: {
+                         normal: {
+                            type: 'dashed'
+                        }
+                    },
+                    data:[[0,355],[117.7,355]]
+                },
+                {
+                    name:'下游总人数',
+                    type:'line',
+                    step: 'true',
+                    lineStyle: {
+                         normal: {
+                            type: 'dashed'
+                        }
+                    },
+                    data:[[0,474],[115,474]]
+                }
+            ]
+        };
+        myChart4.setOption(option4);
+
+          //station5
+         var myChart5=echarts.init(document.getElementById('station5'));
+        var option5 = {
+            title: {
+                text: '5号站'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['上游', '下游','上游总人数','下游总人数']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '10%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                name:'疏散时间（min）',
+                nameLocation:'middle',
+                nameGap:22
+            },
+            yAxis: {
+                type: 'value',
+                name:'疏散人数（人）'
+            },
+            series: [
+                {
+                    name:'上游',
+                    type:'line',
+                    step: 'true',
+                    data:[[27.9,90],[28.9,180],[28.9,270],[30.9,360],[30.9,450],[30.9,540],[74.7,630],[118.5,696]]
+                },
+                 {
+                    name:'下游',
+                    type:'line',
+                    step: 'true',
+                    data:[[44.4,90],[53.4,180],[62.4,270],[71.4,360],[80.4 ,450],[89.4,540],[98.4,630],[107.4,696]]
+                },
+                {
+                    name:'上游总人数',
+                    type:'line',
+                    step: 'true',
+                    lineStyle: {
+                         normal: {
+                            type: 'dashed'
+                        }
+                    },
+                    data:[[0,696],[118.5,696]]
+                },
+                {
+                    name:'下游总人数',
+                    type:'line',
+                    step: 'true',
+                    lineStyle: {
+                         normal: {
+                            type: 'dashed'
+                        }
+                    },
+                    data:[[0,696],[107.4,696]]
+                }
+            ]
+        };
+        myChart5.setOption(option5);
+
+         //station6
+         var myChart6=echarts.init(document.getElementById('station6'));
+        var option6 = {
+            title: {
+                text: '6号站'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['上游', '下游','上游总人数']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '10%',
+                containLabel: true
+            },
+           xAxis: {
+                type: 'value',
+                name:'疏散时间（min）',
+                nameLocation:'middle',
+                nameGap:22
+            },
+            yAxis: {
+                type: 'value',
+                name:'疏散人数（人）'
+            },
+            series: [
+                {
+                    name:'上游',
+                    type:'line',
+                    step: 'true',
+                    data:[[41.4,90],[118.2,180],[119.7,270],[119.7,360]]
+                },
+                {
+                    name:'上游总人数',
+                    type:'line',
+                    step: 'true',
+                    lineStyle: {
+                         normal: {
+                            type: 'dashed'
+                        }
+                    },
+                    data:[[0,360],[119.7,360]]
+                }
+            ]
+        };
+        myChart6.setOption(option6);
+
+        // 基于准备好的dom，初始化echarts实例
+        var myChart7 = echarts.init(document.getElementById('mychart'));
+
+        // 指定图表的配置项和数据
+        var option7 = {
+            title: {
+                text: '各站疏散人均延误（min）'
+            },
+            tooltip: {trigger: 'axis'},
+            legend: {
+                data:['上游','下游']
+            },
+            xAxis: {
+                name:'各站疏散人均延误（min）',
+                type:'category',
+                data: ["1号站","2号站","3号站","4号站","5号站","6号站"],
+                nameLocation:'middle',
+                nameGap:22
+            },
+            yAxis: {
+                name:'人均延误（min）'
+            },
+            series: [
+                {
+                    name: '上游',
+                    type: 'bar',
+                    barGap:'10%',
+                    data: [0, 62, 68.4, 114.6, 37.7, 69]
+                },
+                {
+                    name: '下游',
+                    type: 'bar',
+                    barGap:'10%',
+                    data: [43.2, 76.1, 90.2, 83.8, 60, 0]
+                },
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart7.setOption(option7);
+    </script>
+</html>
