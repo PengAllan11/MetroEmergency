@@ -23,15 +23,20 @@ require([
     var baseMap = new Map("shanghai_map", shanghai_map_def);
     //http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer
     var osmLayer = new OpenStreetMapLayer(openstreetmap_def);
+
     baseMap.on("load", function() {
-        console.log("start");
-        runABus(locTime);
+        var buses = createBuses(busesRoute);
+        var i = 0;
+        for(var busNum in busesRoute){
+            baseMap.graphics.add(buses[i]);
+            runABus(buses[i],busesRoute[busNum]);
+            i++;
+        }
     });
     baseMap.addLayer(osmLayer);
 
     var metroPointLayer = new FeatureLayer("http://10.60.38.158:6080/arcgis/rest/services/ShanghaiMetroV1/MapServer/0",metroPointLayer_def);
     metroPointLayer.setInfoTemplate(new InfoTemplate(metro_point_info_def));
-
     var metroLineLayer = new FeatureLayer("http://10.60.38.158:6080/arcgis/rest/services/ShanghaiMetroV1/MapServer/1");
 
     baseMap.addLayer(metroLineLayer);
@@ -43,10 +48,6 @@ require([
     /**
      * 为指定车站添加乘客
      */
-    //var pictureMarkerSymbol = new PictureMarkerSymbol('../static/bus.png',30,30);
-    //
-    //var point = new Point(121.23, 31.05, map.spatialReference);
-    //var attr = {"x":121.23,"y":31.05,"name":"temp","picId":"id"};
     var waitingPeople= new Array();
 
     for(var i=1;i<=stationData.length;i++){
@@ -97,12 +98,23 @@ require([
     }
 
     /**
-     * A bus named busGraphic
+     * 初始化公交
+     * @param busesRoute
+     * @returns {Array}
      */
-    var busGraphic = new Graphic(bus_graphic_def);
-    baseMap.graphics.add(busGraphic);
+    function createBuses(busesRoute){
+        var buses = [];
+        var i = 0;
+        for(var busNum in busesRoute){
+            bus_graphic_def.geometry.x = busesRoute[busNum][0][0][0];
+            bus_graphic_def.geometry.y = busesRoute[busNum][0][0][1];
+            buses[i] = new Graphic(bus_graphic_def);
+            i++;
+        }
+        return buses;
+    }
 
-    function runABus(loc){
+    function runABus(bus, loc){
         /**
          * s:加快比率
          * t:播放间隔（ms）
@@ -115,7 +127,6 @@ require([
         var point1 = loc[0][0];
         var point2 = loc[0][1];
         var time = loc[1][0];
-
 
         var n =time*60*1000.0/(s*t);
         var i = 1;
@@ -130,10 +141,7 @@ require([
                 i = 1;
                 j++;
                 runALine = setInterval(function () { BusRun(point1,point2); },30);
-            }else {
-                return;
-            }
-
+            }else {return;}
         }
 
         function BusRun(pot0,pot1){
@@ -145,13 +153,10 @@ require([
                     if(pot1[4] == "down"){
                         k = 1;
                         stationData[pot1[2]-1].down -= 70;
-                        console.log("id:"+pot1[2]+",down, picWidth:"+waitingPeople[pot1[2]][k].symbol.width);
                         baseMap.graphics.remove(waitingPeople[pot1[2]][k]);
                         waitingPeople[pot1[2]][k].symbol.setUrl("../resources/pic/"+Math.ceil(stationData[pot1[2]-1].down/70)+".png");
                         waitingPeople[pot1[2]][k].symbol.width = 10*Math.ceil(stationData[pot1[2]-1].down/70)*4/3;
                         waitingPeople[pot1[2]][k].symbol.xoffset = 5*Math.ceil(stationData[pot1[2]-1].down/70)*4/3+15*4/3;
-
-                        console.log(pot1[2]+" "+stationData[pot1[2]-1].down+" "+10*Math.ceil(stationData[pot1[2]-1].down/70));
                     } else{
                         k = 0;
                         stationData[pot1[2]-1].up -= 70;
@@ -164,16 +169,13 @@ require([
                 }
                 setTimeout(BusStop,2000);
             }
-            busGraphic.geometry.setX(pot0[0]+(pot1[0]-pot0[0])/n*i);
-            busGraphic.geometry.setY(pot0[1]+(pot1[1]-pot0[1])/n*i);
+            bus.geometry.setX(pot0[0]+(pot1[0]-pot0[0])/n*i);
+            bus.geometry.setY(pot0[1]+(pot1[1]-pot0[1])/n*i);
             i++;
-            baseMap.graphics.remove(busGraphic);
-            baseMap.graphics.add(busGraphic);
+            baseMap.graphics.remove(bus);
+            baseMap.graphics.add(bus);
         }
         runALine = setInterval(function () { BusRun(point1,point2); },30);
-
     }
-
-
 })
 

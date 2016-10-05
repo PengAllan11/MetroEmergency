@@ -30,9 +30,9 @@ var metro_point_label_def = {
     "labelExpressionInfo": {"value": "{name}"},
     "useCodedValues": true,
     "symbol":{
-        color:[0,0,255,255],
+        color:[0,0,0,255],
         font:{
-            size:10,
+            size:11,
             family:"黑体",
         },
         xoffset: 0,
