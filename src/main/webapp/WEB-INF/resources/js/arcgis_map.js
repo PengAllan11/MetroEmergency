@@ -25,13 +25,27 @@ require([
     var osmLayer = new OpenStreetMapLayer(openstreetmap_def);
 
     baseMap.on("load", function() {
+
         var buses = createBuses(busesRoute);
-        var i = 0;
-        for(var busNum in busesRoute){
-            baseMap.graphics.add(buses[i]);
-            runABus(buses[i],busesRoute[busNum]);
-            i++;
-        }
+        connect.connect(dom.byId("zoomOn"),"click",function(){
+            dom.byId("zoomOn").setAttribute('disabled', true);
+            baseMap.centerAndZoom([121.26, 31.10],12);
+            createPassengers();
+            for(var i in buses){
+                baseMap.graphics.add(buses[i]);
+            }
+        });
+
+        connect.connect(dom.byId("simulate"),"click",function(){
+            dom.byId("simulate").setAttribute('disabled', true);
+            var i = 0;
+            for(var busNum in busesRoute){
+                //baseMap.graphics.add(buses[i]);
+                runABus(buses[i],busesRoute[busNum]);
+                i++;
+            }
+        });
+
     });
     baseMap.addLayer(osmLayer);
 
@@ -50,51 +64,53 @@ require([
      */
     var waitingPeople= new Array();
 
-    for(var i=1;i<=stationData.length;i++){
-        waitingPeople[i] = [];
+    function createPassengers(){
+        for(var i=1;i<=stationData.length;i++){
+            waitingPeople[i] = [];
 
-        people_graphic_def.geometry.x = stationData[i-1].x;
-        people_graphic_def.geometry.y = stationData[i-1].y;
+            people_graphic_def.geometry.x = stationData[i-1].x;
+            people_graphic_def.geometry.y = stationData[i-1].y;
 
-        //0对应up,1对应down
-        people_graphic_def.symbol.url = "../resources/pic/"+Math.ceil(stationData[i-1].up/70)+".png";
-        people_graphic_def.symbol.width = 10*Math.ceil(stationData[i-1].up/70);
-        people_graphic_def.symbol.xoffset = -5*Math.ceil(stationData[i-1].up/70)-15;
-        waitingPeople[i][0] = new Graphic(people_graphic_def);
+            //0对应up,1对应down
+            people_graphic_def.symbol.url = "../resources/pic/"+Math.ceil(stationData[i-1].up/70)+".png";
+            people_graphic_def.symbol.width = 10*Math.ceil(stationData[i-1].up/70);
+            people_graphic_def.symbol.xoffset = -5*Math.ceil(stationData[i-1].up/70)-15;
+            waitingPeople[i][0] = new Graphic(people_graphic_def);
 
-        people_graphic_def.symbol.url = "../resources/pic/"+Math.ceil(stationData[i-1].down/70)+".png";
-        people_graphic_def.symbol.width = 10*Math.ceil(stationData[i-1].down/70);
-        people_graphic_def.symbol.xoffset = 5*Math.ceil(stationData[i-1].down/70)+15;
-        waitingPeople[i][1] = new Graphic(people_graphic_def);
+            people_graphic_def.symbol.url = "../resources/pic/"+Math.ceil(stationData[i-1].down/70)+".png";
+            people_graphic_def.symbol.width = 10*Math.ceil(stationData[i-1].down/70);
+            people_graphic_def.symbol.xoffset = 5*Math.ceil(stationData[i-1].down/70)+15;
+            waitingPeople[i][1] = new Graphic(people_graphic_def);
 
-        //waitingPeople[i][0] = new Graphic({
-        //    "geometry":{"x":stationData[i-1].x,"y":stationData[i-1].y, "spatialReference":{"wkid":4326}},
-        //    "attributes":{"XCoord":stationData[i-1].x, "YCoord":stationData[i-1].y,"stationName":stationData[i-1].name},
-        //    "symbol":{
-        //        "url":"../resources/pic/"+Math.ceil(stationData[i-1].up/70)+".png",
-        //        "height":20,
-        //        "width":10*Math.ceil(stationData[i-1].up/70),
-        //        "type":"esriPMS",
-        //        "xoffset": -5*Math.ceil(stationData[i-1].up/70)-10,
-        //        "yoffset": 0
-        //    }
-        //});
-        //waitingPeople[i][1] = new Graphic({
-        //    "geometry":{"x":stationData[i-1].x,"y":stationData[i-1].y, "spatialReference":{"wkid":4326}},
-        //    "attributes":{"XCoord":stationData[i-1].x, "YCoord":stationData[i-1].y,"stationName":stationData[i-1].name},
-        //    "symbol":{
-        //        "url":"../resources/pic/"+Math.ceil(stationData[i-1].down/70)+".png",
-        //        "height":20,
-        //        "width":10*Math.ceil(stationData[i-1].down/70),
-        //        "type":"esriPMS",
-        //        "xoffset": 5*Math.ceil(stationData[i-1].down/70)+10,
-        //        "yoffset": 0
-        //    }
-        //});
+            //waitingPeople[i][0] = new Graphic({
+            //    "geometry":{"x":stationData[i-1].x,"y":stationData[i-1].y, "spatialReference":{"wkid":4326}},
+            //    "attributes":{"XCoord":stationData[i-1].x, "YCoord":stationData[i-1].y,"stationName":stationData[i-1].name},
+            //    "symbol":{
+            //        "url":"../resources/pic/"+Math.ceil(stationData[i-1].up/70)+".png",
+            //        "height":20,
+            //        "width":10*Math.ceil(stationData[i-1].up/70),
+            //        "type":"esriPMS",
+            //        "xoffset": -5*Math.ceil(stationData[i-1].up/70)-10,
+            //        "yoffset": 0
+            //    }
+            //});
+            //waitingPeople[i][1] = new Graphic({
+            //    "geometry":{"x":stationData[i-1].x,"y":stationData[i-1].y, "spatialReference":{"wkid":4326}},
+            //    "attributes":{"XCoord":stationData[i-1].x, "YCoord":stationData[i-1].y,"stationName":stationData[i-1].name},
+            //    "symbol":{
+            //        "url":"../resources/pic/"+Math.ceil(stationData[i-1].down/70)+".png",
+            //        "height":20,
+            //        "width":10*Math.ceil(stationData[i-1].down/70),
+            //        "type":"esriPMS",
+            //        "xoffset": 5*Math.ceil(stationData[i-1].down/70)+10,
+            //        "yoffset": 0
+            //    }
+            //});
 
-        console.log(i+" "+stationData[i-1].down+" "+waitingPeople[i][1].symbol.width);
-        baseMap.graphics.add(waitingPeople[i][1]);
-        baseMap.graphics.add(waitingPeople[i][0]);
+            console.log(i+" "+stationData[i-1].down+" "+waitingPeople[i][1].symbol.width);
+            baseMap.graphics.add(waitingPeople[i][1]);
+            baseMap.graphics.add(waitingPeople[i][0]);
+        }
     }
 
     /**
@@ -108,6 +124,7 @@ require([
         for(var busNum in busesRoute){
             bus_graphic_def.geometry.x = busesRoute[busNum][0][0][0];
             bus_graphic_def.geometry.y = busesRoute[busNum][0][0][1];
+            //console.log(bus_graphic_def.geometry.x+" "+bus_graphic_def.geometry.y);
             buses[i] = new Graphic(bus_graphic_def);
             i++;
         }

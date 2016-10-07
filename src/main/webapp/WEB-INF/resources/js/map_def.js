@@ -3,8 +3,8 @@
  */
 var shanghai_map_def = {
     //basemap: "streets",
-    center: [121.26, 31.10],
-    zoom: 12,
+    center: [121.45, 31.22],
+    zoom: 11,
     minZoom: 10,
     maxZoom: 17,
     showLabels : true,
@@ -29,6 +29,8 @@ var metro_point_info_def = {
 var metro_point_label_def = {
     "labelExpressionInfo": {"value": "{name}"},
     "useCodedValues": true,
+    "minScale":200000,
+    "maxScale":3000,
     "symbol":{
         color:[0,0,0,255],
         font:{
