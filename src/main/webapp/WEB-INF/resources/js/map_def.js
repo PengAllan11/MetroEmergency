@@ -43,13 +43,26 @@ var metro_point_label_def = {
     "labelPlacement":"below-center"
 };
 
-var people_graphic_def = {
+var peopleOn_graphic_def = {
     "geometry":{"x":0,"y":0, "spatialReference":{"wkid":4326}},
     //"attributes":{"XCoord":0, "YCoord":0,"stationName":null},
     "symbol":{
         "url":"../resources/pic/",
         "height":20,
         "width":0,
+        "type":"esriPMS",
+        "xoffset": 0,
+        "yoffset": 0
+    }
+};
+
+var peopleOff_graphic_def = {
+    "geometry":{"x":0,"y":0, "spatialReference":{"wkid":4326}},
+    //"attributes":{"XCoord":0, "YCoord":0,"stationName":null},
+    "symbol":{
+        "url":"../resources/pic/off.png",
+        "height":20,
+        "width":10,
         "type":"esriPMS",
         "xoffset": 0,
         "yoffset": 0
@@ -67,5 +80,21 @@ var bus_graphic_def = {
         "yoffset": 0
     }
 };
+
+var people_num_graphic_def = {
+    "geometry":{"x":121.197,"y":31.034, "spatialReference":{"wkid":4326}},
+    "symbol":{
+        text:"-",
+        color:[255,0,0,255],
+        font:{
+            size:12,
+            weight: "WEIGHT_BOLDER",
+            family:"黑体",
+        },
+        xoffset: 0,
+        yoffset: 0,
+        "type":"esriTS"
+    }
+}
 
 
