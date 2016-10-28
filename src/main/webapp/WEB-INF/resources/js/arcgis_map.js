@@ -22,7 +22,10 @@ require([
             FeatureLayer,LabelClass,OpenStreetMapLayer) {
 
     var baseMap = new Map("shanghai_map", shanghai_map_def);
-    var osmLayer = new OpenStreetMapLayer(openstreetmap_def);
+    //var osmLayer = new OpenStreetMapLayer(openstreetmap_def);
+    //深蓝色：http://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetPurplishBlue/MapServer
+    //http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer
+    //var tileLayer = new ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer");
 
     var buses = new Array();
     var waitingPeople= new Array();
@@ -31,7 +34,7 @@ require([
     baseMap.on("load", function() {
         connect.connect(dom.byId("zoomOn"),"click",function(){
             dom.byId("zoomOn").setAttribute('disabled', true);
-            baseMap.centerAndZoom([121.243, 31.085],13);
+            baseMap.centerAndZoom([121.243, 31.085],12);
             buses = createBuses();
             waitPeopleNum = createWaitPeopleNumber();
             waitingPeople = createPassengers();
@@ -47,12 +50,12 @@ require([
         });
     });
 
-    baseMap.addLayer(osmLayer);
+    //baseMap.addLayer(tileLayer);
 
-    var metroPointLayer = new FeatureLayer("http://10.60.38.158:6080/arcgis/rest/services/ShanghaiMetroV1/MapServer/0",metroPointLayer_def);
+    var metroPointLayer = new FeatureLayer("http://10.60.38.158:6080/arcgis/rest/services/ShanghaiMetroV3/MapServer/0",metroPointLayer_def);
     metroPointLayer.setInfoTemplate(new InfoTemplate(metro_point_info_def));
     metroPointLayer.setLabelingInfo([metro_point_label_def]);
-    var metroLineLayer = new FeatureLayer("http://10.60.38.158:6080/arcgis/rest/services/ShanghaiMetroV1/MapServer/1");
+    var metroLineLayer = new FeatureLayer("http://10.60.38.158:6080/arcgis/rest/services/ShanghaiMetroV3/MapServer/1");
     baseMap.addLayer(metroLineLayer);
     baseMap.addLayer(metroPointLayer);
 
@@ -148,10 +151,11 @@ require([
                     peopleOff_graphic_def.geometry.x = pot1[0];
                     peopleOff_graphic_def.geometry.y = pot1[1];
                     if(pot1[4] == "down"){
-                        peopleOff_graphic_def.symbol.xoffset = 20;
+                        peopleOff_graphic_def.symbol.xoffset = 23;
                     } else{
-                        peopleOff_graphic_def.symbol.xoffset = -20;
+                        peopleOff_graphic_def.symbol.xoffset = -23;
                     }
+                    //peopleOff_graphic_def.symbol.yoffset = -5;
                     var peopleOffGraphic = new Graphic(peopleOff_graphic_def);
                     baseMap.graphics.add(peopleOffGraphic);
                     setTimeout(function(){return baseMap.graphics.remove(peopleOffGraphic);},2000);

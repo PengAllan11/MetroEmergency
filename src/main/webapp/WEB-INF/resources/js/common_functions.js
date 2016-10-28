@@ -27,6 +27,7 @@ function get_spec_PeopleOnGraphicDef(i, dir){
 function get_spec_PeoNumGraphicDef(i, dir){
     people_num_graphic_def.geometry.x = stationData[i].x;
     people_num_graphic_def.geometry.y = stationData[i].y;
+    people_num_graphic_def.symbol.yoffset = -4;
 
     if(dir == "up"){
         people_num_graphic_def.symbol.text = stationData[i].up;

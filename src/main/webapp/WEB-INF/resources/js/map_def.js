@@ -2,11 +2,11 @@
  * Created by peng_an on 2016/9/25.
  */
 var shanghai_map_def = {
-    //basemap: "streets",
+    basemap: "osm",
     center: [121.45, 31.22],
     zoom: 11,
     minZoom: 10,
-    maxZoom: 17,
+    maxZoom: 14,
     showLabels : true,
     logo: false
 };
